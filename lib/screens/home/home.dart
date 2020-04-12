@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/services/authservice.dart';
+import 'package:my_shop/screens/tabs/settings.dart';
+import 'package:my_shop/screens/tabs/store.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,22 +9,49 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  final AuthService _auth = AuthService();
+  int _currentIndex = 1;
+
+  final List<Widget> _children = [
+    Store(),
+    Settings(),
+    Container(color: Colors.green)
+  ];
+
+  
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: <Widget>[
-          FlatButton.icon(
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            icon: Icon(Icons.power_settings_new , color: Colors.white),
-            label: Text("LogOut", style: TextStyle(color: Colors.white),))
-        ],
-      ),
+      backgroundColor: Colors.blue,
+      bottomNavigationBar: BottomNavigationBar(
+       currentIndex: _currentIndex,
+       onTap: onTabTapped,
+       backgroundColor:  Colors.white,
+
+       items: [
+         BottomNavigationBarItem(
+           icon: new Icon(Icons.store),
+           title: new Text('Store'),
+         ),
+         BottomNavigationBarItem(
+           icon: Icon(Icons.settings),
+           title: Text('Settings')
+         )
+       ],
+     ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: null,
+      child: Icon(Icons.add),
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: _children[this._currentIndex],
     );
   }
+
+  void onTabTapped(int index) {
+   setState(() {
+     _currentIndex = index;
+   });
+ }
+  
 }

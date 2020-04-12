@@ -4,6 +4,15 @@ class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  static AuthService _instance = null;
+
+  static AuthService get getInstance {
+    if (_instance == null) {
+      _instance = AuthService();
+    }
+    return _instance;
+  }
+
   Stream<FirebaseUser> get user {
     return _auth.onAuthStateChanged;
   }

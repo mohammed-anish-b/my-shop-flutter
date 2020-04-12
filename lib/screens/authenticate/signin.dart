@@ -15,7 +15,7 @@ class _SignInState extends State<SignIn> {
 
   String email;
 
-  final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService.getInstance;
   final _login = GlobalKey<FormState>();
 
   bool isLoading = false;

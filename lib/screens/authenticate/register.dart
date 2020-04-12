@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
 
   bool isLoading = false;
 
-  final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService.getInstance;
   final _signup = GlobalKey<FormState>();
 
   @override
