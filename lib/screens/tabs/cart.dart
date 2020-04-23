@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
+class Cart extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _CartState createState() => _CartState();
 }
 
-class _SettingsState extends State<Settings> {
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -13,7 +13,7 @@ class _SettingsState extends State<Settings> {
         SliverAppBar(
           expandedHeight: 150.0,
           flexibleSpace: const FlexibleSpaceBar(
-            title: Text('Settings'),
+            title: Text('Cart'),
           ),
           floating: true,
         ),
@@ -23,11 +23,10 @@ class _SettingsState extends State<Settings> {
               Container(
                 height: 1200.0,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft:  const  Radius.circular(40.0),
-                    topRight: const  Radius.circular(40.0))
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(40.0),
+                        topRight: const Radius.circular(40.0))),
               ),
             ],
           ),

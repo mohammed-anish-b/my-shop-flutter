@@ -1,57 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/screens/tabs/settings.dart';
-import 'package:my_shop/screens/tabs/store.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_shop/blocs/current-tab-bloc.dart';
+import 'package:my_shop/screens/home/cutom-bottom-navigater.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-
-  int _currentIndex = 1;
-
-  final List<Widget> _children = [
-    Store(),
-    Settings(),
-    Container(color: Colors.green)
-  ];
-
-  
-  
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      bottomNavigationBar: BottomNavigationBar(
-       currentIndex: _currentIndex,
-       onTap: onTabTapped,
-       backgroundColor:  Colors.white,
-
-       items: [
-         BottomNavigationBarItem(
-           icon: new Icon(Icons.store),
-           title: new Text('Store'),
-         ),
-         BottomNavigationBarItem(
-           icon: Icon(Icons.settings),
-           title: Text('Settings')
-         )
-       ],
-     ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: null,
-      child: Icon(Icons.add),
-    ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: _children[this._currentIndex],
-    );
+    return BlocProvider(
+        create: (context) => TabSwitchBloc(),
+        child: Scaffold(
+          backgroundColor: Colors.blue,
+          bottomNavigationBar: CustomBottomNavigater(),
+          floatingActionButton: FloatingActionButton(
+            tooltip: "Add Product",
+            onPressed: () {
+              Navigator.pushNamed(context, "create-product");
+            },
+            child: Icon(Icons.add),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          body: BlocBuilder<TabSwitchBloc, Widget>(
+              builder: (BuildContext context, Widget widget) {
+            return widget;
+          }),
+        ));
   }
-
-  void onTabTapped(int index) {
-   setState(() {
-     _currentIndex = index;
-   });
- }
-  
 }

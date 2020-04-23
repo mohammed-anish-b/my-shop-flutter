@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/services/authservice.dart';
+import 'package:my_shop/api/models/Product.dart';
+import 'package:my_shop/api/services/product-service.dart';
+import 'package:my_shop/screens/product/product_list.dart';
+import 'package:my_shop/services/auth-service.dart';
+import 'package:provider/provider.dart';
 
-class Store extends StatefulWidget {
-  @override
-  _StoreState createState() => _StoreState();
-}
-
-class _StoreState extends State<Store> {
-
+class Store extends StatelessWidget {
   final AuthService _auth = AuthService.getInstance;
-  
+  final ProductService _productService = ProductService.getInstance;
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -35,13 +34,16 @@ class _StoreState extends State<Store> {
         SliverList(
           delegate: SliverChildListDelegate(
             <Widget>[
-              Container(
-                height: 1200.0,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft:  const  Radius.circular(40.0),
-                    topRight: const  Radius.circular(40.0))
+              StreamProvider<List<Product>>.value(
+                value: _productService.products,
+                child: Container(
+                  height: 1200.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(40.0),
+                          topRight: const Radius.circular(40.0))),
+                  child: ProductList(),
                 ),
               ),
             ],

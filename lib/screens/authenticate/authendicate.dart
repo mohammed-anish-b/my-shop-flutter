@@ -8,7 +8,6 @@ class Authendicate extends StatefulWidget {
 }
 
 class _AuthendicateState extends State<Authendicate> {
-
   bool onlogin = true;
 
   void toggleView() {

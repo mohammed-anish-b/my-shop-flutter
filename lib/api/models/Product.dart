@@ -1,15 +1,16 @@
 class Product {
+  String uid;
   String name;
-  int price;
+  String price;
   String imageUrl;
+  
+  static Product fromJson(json,String id) {
 
-  Product(String name, int price, String imageUrl){
-    this.name = name;
-    this.price = price;
-    this.imageUrl = imageUrl;
-  }
-
-  static Product fromJson(json) {
-    return Product(json["name"], json["price"], json["imageUrl"]);
+    Product p = Product();
+    p.name = json['name'];
+    p.price = json['price'];
+    p.imageUrl =json['imageUrl'];
+    p.uid = id;
+    return p;
   }
 }
