@@ -48,7 +48,7 @@ class _SignInState extends State<SignIn> {
             delegate: SliverChildListDelegate(
               <Widget>[
                 Container(
-                  height: 1200.0,
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(

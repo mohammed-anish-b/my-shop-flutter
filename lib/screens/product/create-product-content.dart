@@ -12,7 +12,7 @@ class CreateProductContent extends StatelessWidget {
      final _createProductBloc = Provider.of<CreateProductBloc>(context);
 
     return Container(
-      height: 500.0,
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

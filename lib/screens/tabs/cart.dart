@@ -21,7 +21,7 @@ class _CartState extends State<Cart> {
           delegate: SliverChildListDelegate(
             <Widget>[
               Container(
-                height: 1200.0,
+                height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(

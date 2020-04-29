@@ -13,7 +13,7 @@ class ProductTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Card(
-        color: Colors.white70,
+        color: Colors.white,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),
