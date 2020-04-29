@@ -13,4 +13,9 @@ class Product {
     p.uid = id;
     return p;
   }
+
+  @override
+  String toString() {
+    return '$uid + $name + $price + $imageUrl';
+  }
 }

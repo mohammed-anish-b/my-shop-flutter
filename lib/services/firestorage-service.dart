@@ -17,9 +17,14 @@ class FireStorageService {
 
   StorageUploadTask _task;
   String url;
-  void startUpload(File file) async {
-    _task = _storage.ref().child("images${DateTime.now()}").putFile(file);
-    String url = await (await _task.onComplete).ref.getDownloadURL();
-    this.url = url;
+
+  Future<String> startUpload(File file) async {
+    if (file != null) {
+      _task = _storage.ref().child("images${DateTime.now()}").putFile(file);
+      String url = await (await _task.onComplete).ref.getDownloadURL();
+      return url;
+    } else {
+      return null;
+    }
   }
 }

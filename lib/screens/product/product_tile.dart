@@ -37,7 +37,7 @@ class ProductTile extends StatelessWidget {
           ),
           key: ValueKey(product.uid),
           child: ListTile(
-            leading: CircleAvatar(
+            leading: product.imageUrl == null ? CircleAvatar(child: FlutterLogo()) : CircleAvatar(
               backgroundImage: NetworkImage(product.imageUrl),
             ),
             title: Text(product.name),

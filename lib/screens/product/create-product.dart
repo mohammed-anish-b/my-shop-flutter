@@ -6,8 +6,14 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_shop/api/models/Product.dart';
 import 'package:my_shop/api/services/product-service.dart';
+import 'package:my_shop/blocs/create-product-bloc.dart';
+import 'package:my_shop/blocs/image-picker-bloc.dart';
+import 'package:my_shop/blocs/loading-bloc.dart';
+import 'package:my_shop/screens/product/create-product-button.dart';
+import 'package:my_shop/screens/product/create-product-content.dart';
 import 'package:my_shop/services/firestorage-service.dart';
 import 'package:my_shop/utils/loading.dart';
+import 'package:provider/provider.dart';
 
 class CreateProduct extends StatefulWidget {
   @override
@@ -24,121 +30,33 @@ class _CreateProductState extends State<CreateProduct> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.blue,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              expandedHeight: 150.0,
-              flexibleSpace: const FlexibleSpaceBar(
-                title: Text('Create Product'),
-              ),
-              floating: true,
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                <Widget>[
-                  Container(
-                    height: 500.0,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: const Radius.circular(40.0),
-                            topRight: const Radius.circular(40.0))),
-                    child: Form(
-                        child: Padding(
-                      padding: EdgeInsets.all(23),
-                      child: ListView(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Center(
-                                  child: _image == null
-                                      ? Text('No image selected.')
-                                      : ClipRRect(
-                                          child: Image.file(
-                                            _image,
-                                            height: 170,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                ),
-                              ),
-                              FloatingActionButton(
-                                heroTag: null,
-                                onPressed: () {
-                                  getImage(ImageSource.gallery);
-                                },
-                                tooltip: 'Pick Image',
-                                child: Icon(Icons.photo_library),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              FloatingActionButton(
-                                heroTag: null,
-                                onPressed: () {
-                                  getImage(ImageSource.camera);
-                                },
-                                tooltip: 'Pick Image',
-                                child: Icon(Icons.add_a_photo),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: "Name",
-                                labelStyle: TextStyle(fontSize: 25)),
-                            onChanged: (val) {
-                              this._product.name = val;
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: "Price",
-                                labelStyle: TextStyle(fontSize: 25)),
-                            onChanged: (val) {
-                              this._product.price = val;
-                            },
-                          )
-                        ],
-                      ),
-                    )),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: isLoading
-            ? Loading(color: Colors.white)
-            : FlatButton.icon(
-                onPressed: () async {
-                  setState(() {
-                    this.isLoading = true;
-                  });
-                  await _storageService.startUpload(_image);
-                  this._product.imageUrl = _storageService.url;
-                  _productService.createProduct(_product).then((val) {
-                    this.isLoading = false;
-                    Navigator.pop(context);
-                  });
-                },
-                icon: Icon(
-                  Icons.fastfood,
-                  color: Colors.white,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ImagePickerBloc>.value(value: ImagePickerBloc()),
+        Provider(create: (context) => CreateProductBloc()),
+        Provider(create: (context) => FireStorageService()),
+        Provider(create: (context) => ProductService())
+      ],
+      child: Scaffold(
+          backgroundColor: Colors.blue,
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                expandedHeight: 150.0,
+                flexibleSpace: const FlexibleSpaceBar(
+                  title: Text('Create Product'),
                 ),
-                label: Text(
-                  "CREATE",
-                  style: TextStyle(color: Colors.white),
-                )));
+                floating: true,
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  <Widget>[CreateProductContent()],
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar: ChangeNotifierProvider<LoadingBloc>(create: (context) => LoadingBloc(), child: CreateProductButton())),
+    );
   }
 
   Future getImage(ImageSource source) async {
