@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_shop/blocs/current-tab-bloc.dart';
+import 'package:my_shop/blocs/tab-switch-bloc.dart';
+import 'package:provider/provider.dart';
 
-class CustomBottomNavigater extends StatefulWidget {
-  @override
-  _CustomBottomNavigaterState createState() => _CustomBottomNavigaterState();
-}
-
-class _CustomBottomNavigaterState extends State<CustomBottomNavigater> {
-  int _currentIndex = 0;
+class CustomBottomNavigater extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _tabSwitchBloc = BlocProvider.of<TabSwitchBloc>(context);
+
+    final _tabSwitchBloc = Provider.of<TabSwitchBloc>(context);
+
     return BottomNavigationBar(
-      currentIndex: _currentIndex,
+      currentIndex: _tabSwitchBloc.index,
       onTap: (index) {
-        setState(() => _currentIndex = index);
-        _tabSwitchBloc.add(TabChangeEvent(data: index));
+        _tabSwitchBloc.switchTab(index);
       },
       backgroundColor: Colors.white,
       items: [

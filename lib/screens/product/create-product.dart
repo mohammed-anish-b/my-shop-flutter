@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_shop/api/models/Product.dart';
 import 'package:my_shop/api/services/product-service.dart';
 import 'package:my_shop/services/firestorage-service.dart';
+import 'package:my_shop/utils/loading.dart';
 
 class CreateProduct extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class CreateProduct extends StatefulWidget {
 
 class _CreateProductState extends State<CreateProduct> {
   File _image;
-
+  bool isLoading = false;
   Product _product = Product();
 
   FireStorageService _storageService = FireStorageService.getInstance;
@@ -56,7 +57,10 @@ class _CreateProductState extends State<CreateProduct> {
                                   child: _image == null
                                       ? Text('No image selected.')
                                       : ClipRRect(
-                                          child: Image.file(_image,height: 170,),
+                                          child: Image.file(
+                                            _image,
+                                            height: 170,
+                                          ),
                                           borderRadius:
                                               BorderRadius.circular(15)),
                                 ),
@@ -113,20 +117,28 @@ class _CreateProductState extends State<CreateProduct> {
             ),
           ],
         ),
-        bottomNavigationBar: FlatButton.icon(
-            onPressed: () async {
-              await _storageService.startUpload(_image);
-              this._product.imageUrl = _storageService.url;
-              _productService.createProduct(_product);
-            },
-            icon: Icon(
-              Icons.fastfood,
-              color: Colors.white,
-            ),
-            label: Text(
-              "CREATE",
-              style: TextStyle(color: Colors.white),
-            )));
+        bottomNavigationBar: isLoading
+            ? Loading(color: Colors.white)
+            : FlatButton.icon(
+                onPressed: () async {
+                  setState(() {
+                    this.isLoading = true;
+                  });
+                  await _storageService.startUpload(_image);
+                  this._product.imageUrl = _storageService.url;
+                  _productService.createProduct(_product).then((val) {
+                    this.isLoading = false;
+                    Navigator.pop(context);
+                  });
+                },
+                icon: Icon(
+                  Icons.fastfood,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "CREATE",
+                  style: TextStyle(color: Colors.white),
+                )));
   }
 
   Future getImage(ImageSource source) async {

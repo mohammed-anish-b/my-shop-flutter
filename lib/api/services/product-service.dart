@@ -25,9 +25,9 @@ class ProductService {
     return productCollection.snapshots().map(_productFromSnapshot);
   }
 
-  void createProduct(Product product) {
+   Future<DocumentReference> createProduct(Product product) {
     print(product);
-    productCollection.add({
+    return productCollection.add({
       'id':product.uid,
       'name': product.name,
       'price': product.price,

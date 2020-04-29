@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_shop/blocs/current-tab-bloc.dart';
+import 'package:my_shop/blocs/tab-switch-bloc.dart';
 import 'package:my_shop/screens/home/cutom-bottom-navigater.dart';
+import 'package:my_shop/screens/tabs/tab.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => TabSwitchBloc(),
+    return ChangeNotifierProvider<TabSwitchBloc>.value(
+        value: TabSwitchBloc(),
         child: Scaffold(
           backgroundColor: Colors.blue,
           bottomNavigationBar: CustomBottomNavigater(),
@@ -20,10 +21,9 @@ class Home extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          body: BlocBuilder<TabSwitchBloc, Widget>(
-              builder: (BuildContext context, Widget widget) {
-            return widget;
-          }),
+          body: CustomTab(),
         ));
   }
 }
+
+

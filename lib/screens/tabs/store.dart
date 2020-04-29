@@ -37,13 +37,13 @@ class Store extends StatelessWidget {
               StreamProvider<List<Product>>.value(
                 value: _productService.products,
                 child: Container(
-                  height: 1200.0,
+                  height: 450.0,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: const Radius.circular(40.0),
                           topRight: const Radius.circular(40.0))),
-                  child: ProductList(),
+                  child: SafeArea(child: ProductList()),
                 ),
               ),
             ],
