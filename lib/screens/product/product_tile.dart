@@ -2,18 +2,86 @@ import 'package:flutter/material.dart';
 import 'package:my_shop/api/models/Product.dart';
 import 'package:my_shop/api/services/product-service.dart';
 
-class ProductTile extends StatelessWidget {
+class ProductTileGrid extends StatelessWidget {
   final Product product;
+  final Color color;
   final ProductService _productService = ProductService.getInstance;
 
-  ProductTile({this.product});
+  ProductTileGrid({this.product, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          elevation: 10,
+          color: Colors.white,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: product.imageUrl == null
+                      ? CircleAvatar(maxRadius: 60,child: FlutterLogo())
+                      : CircleAvatar(
+                          maxRadius: 60,
+                          backgroundImage: NetworkImage(product.imageUrl),
+                        ),
+                ),
+              ),
+              ListTile(
+                title: Text(product.name),
+                subtitle: Text('INR ${product.price}'),
+                trailing: IconButton(
+                    icon: Icon(Icons.add_shopping_cart), onPressed: null),
+              )
+            ],
+          ),
+        ));
+  }
+
+  Future<bool> showDailog(context) async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: const Text("Are you sure ?")),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  _productService.deleteProduct(product.uid);
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text(
+                  "DELETE",
+                  style: TextStyle(color: Colors.red),
+                )),
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("CANCEL"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+
+class ProductTileList extends StatelessWidget {
+
+  final Product product;
+  final Color color;
+  final ProductService _productService = ProductService.getInstance;
+
+  ProductTileList({this.product, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Card(
-        color: Colors.white,
+        elevation: 10,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),
@@ -50,7 +118,7 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Future<bool> showDailog(context) async {
+   Future<bool> showDailog(context) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
