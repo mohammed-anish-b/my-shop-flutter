@@ -6,7 +6,7 @@ enum ViewType {
 
 class ProductViewBloc extends ChangeNotifier {
 
-  ViewType _viewType = ViewType.GRIDVIEW;
+  ViewType _viewType = ViewType.LISTVIEW;
 
   ViewType get viewType => _viewType;
 

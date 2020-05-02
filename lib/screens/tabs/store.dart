@@ -15,7 +15,7 @@ class Store extends StatelessWidget {
     final _productViewBloc = Provider.of<ProductViewBloc>(context);
 
     return products == null
-        ? Loading(color: Colors.blue)
+        ? Center(child: Loading(color: Colors.blue))
         : CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
@@ -47,8 +47,6 @@ class Store extends StatelessWidget {
                           width: 300,
                           child: TextFormField(
                             decoration: InputDecoration(
-                              //icon: IconButton(icon: Icon(Icons.menu , color: Colors.white,), onPressed: null),
-
                               filled: true,
                               fillColor: Colors.white,
                               hintText: "Search products....",

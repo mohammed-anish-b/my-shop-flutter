@@ -18,4 +18,9 @@ class Product {
   String toString() {
     return '$uid + $name + $price + $imageUrl';
   }
+
+  int hashcode() {
+    return name.hashCode;
+  }
+  
 }

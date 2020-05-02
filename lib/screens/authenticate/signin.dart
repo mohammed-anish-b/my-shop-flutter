@@ -23,10 +23,14 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      //backgroundColor: Colors.blue,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(70))),
+          backgroundColor: Colors.blueGrey,
             expandedHeight: 150.0,
             flexibleSpace: const FlexibleSpaceBar(
               title: Text('Login'),

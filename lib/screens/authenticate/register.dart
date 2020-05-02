@@ -23,10 +23,11 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blueGrey,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+          backgroundColor: Colors.blueGrey,
             expandedHeight: 150.0,
             flexibleSpace: const FlexibleSpaceBar(
               title: Text('Register'),

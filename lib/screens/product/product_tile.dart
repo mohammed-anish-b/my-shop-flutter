@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/api/models/Product.dart';
 import 'package:my_shop/api/services/product-service.dart';
+import 'package:my_shop/blocs/cart-bloc.dart';
+import 'package:provider/provider.dart';
 
 class ProductTileGrid extends StatelessWidget {
   final Product product;
@@ -11,31 +13,55 @@ class ProductTileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _cartBloc = Provider.of<CartBloc>(context);
+
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 10,
           color: Colors.white,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: product.imageUrl == null
-                      ? CircleAvatar(maxRadius: 60,child: FlutterLogo())
-                      : CircleAvatar(
-                          maxRadius: 60,
-                          backgroundImage: NetworkImage(product.imageUrl),
-                        ),
-                ),
+          child: Dismissible(
+            confirmDismiss: (DismissDirection direction) async {
+              return await showDailog(context);
+            },
+            direction: DismissDirection.endToStart,
+            background: Container(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    )),
               ),
-              ListTile(
-                title: Text(product.name),
-                subtitle: Text('INR ${product.price}'),
-                trailing: IconButton(
-                    icon: Icon(Icons.add_shopping_cart), onPressed: null),
-              )
-            ],
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0), color: Colors.red),
+            ),
+            key: ValueKey(product.uid),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: product.imageUrl == null
+                        ? CircleAvatar(maxRadius: 60, child: FlutterLogo())
+                        : CircleAvatar(
+                            maxRadius: 60,
+                            minRadius: 50,
+                            backgroundImage: NetworkImage(product.imageUrl),
+                          ),
+                  ),
+                ),
+                ListTile(
+                  title: Text(product.name),
+                  subtitle: Text('INR ${product.price}'),
+                  trailing: IconButton(
+                      icon: Icon(Icons.add_shopping_cart),
+                      onPressed: () => _cartBloc.add(product)),
+                )
+              ],
+            ),
           ),
         ));
   }
@@ -67,9 +93,7 @@ class ProductTileGrid extends StatelessWidget {
   }
 }
 
-
 class ProductTileList extends StatelessWidget {
-
   final Product product;
   final Color color;
   final ProductService _productService = ProductService.getInstance;
@@ -78,6 +102,8 @@ class ProductTileList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _cartBloc = Provider.of<CartBloc>(context);
+
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Card(
@@ -105,20 +131,23 @@ class ProductTileList extends StatelessWidget {
           ),
           key: ValueKey(product.uid),
           child: ListTile(
-            leading: product.imageUrl == null ? CircleAvatar(child: FlutterLogo()) : CircleAvatar(
-              backgroundImage: NetworkImage(product.imageUrl),
-            ),
+            leading: product.imageUrl == null
+                ? CircleAvatar(child: FlutterLogo())
+                : CircleAvatar(
+                    backgroundImage: NetworkImage(product.imageUrl),
+                  ),
             title: Text(product.name),
             subtitle: Text('INR ${product.price}'),
             trailing: IconButton(
-                icon: Icon(Icons.add_shopping_cart), onPressed: null),
+                icon: Icon(Icons.add_shopping_cart),
+                onPressed: () => _cartBloc.add(product)),
           ),
         ),
       ),
     );
   }
 
-   Future<bool> showDailog(context) async {
+  Future<bool> showDailog(context) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
