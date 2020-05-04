@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/screens/authenticate/register.dart';
-import 'package:my_shop/screens/authenticate/signin.dart';
+import 'package:my_shop/blocs/login-signup-toggle-bloc.dart';
+import 'package:provider/provider.dart';
 
-class Authendicate extends StatefulWidget {
-  @override
-  _AuthendicateState createState() => _AuthendicateState();
-}
-
-class _AuthendicateState extends State<Authendicate> {
-  bool onlogin = true;
-
-  void toggleView() {
-    setState(() {
-      this.onlogin = !this.onlogin;
-    });
-  }
-
+class Authendicate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (onlogin) {
-      return SignIn(toggleView: toggleView);
-    } else {
-      return Register(toggleView: toggleView);
-    }
+
+    final _loginSignupToggleBloc = Provider.of<LoginSignupToggleBloc>(context);
+    return _loginSignupToggleBloc.currentTab;
+
   }
 }

@@ -16,7 +16,6 @@ class ProductService {
 
   List<Product> _productFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      print(doc);
       return Product.fromJson(doc,doc.documentID);
     }).toList();
   }
@@ -26,7 +25,6 @@ class ProductService {
   }
 
    Future<DocumentReference> createProduct(Product product) {
-    print(product);
     return productCollection.add({
       'id':product.uid,
       'name': product.name,
@@ -36,7 +34,6 @@ class ProductService {
   }
 
   void deleteProduct(String uid) {
-    print("delete $uid");
     productCollection.document(uid).delete();
   }
 }

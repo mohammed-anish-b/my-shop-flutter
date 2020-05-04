@@ -18,7 +18,7 @@ class ProductTileGrid extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
-          elevation: 10,
+          elevation: 4,
           color: Colors.white,
           child: Dismissible(
             confirmDismiss: (DismissDirection direction) async {
@@ -46,11 +46,7 @@ class ProductTileGrid extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: product.imageUrl == null
                         ? CircleAvatar(maxRadius: 60, child: FlutterLogo())
-                        : CircleAvatar(
-                            maxRadius: 60,
-                            minRadius: 50,
-                            backgroundImage: NetworkImage(product.imageUrl),
-                          ),
+                        : Image.network(product.imageUrl,fit: BoxFit.fill,),
                   ),
                 ),
                 ListTile(
@@ -107,7 +103,7 @@ class ProductTileList extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Card(
-        elevation: 10,
+        elevation: 4,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),

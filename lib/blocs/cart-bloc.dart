@@ -26,7 +26,6 @@ class CartBloc extends ChangeNotifier {
     } else {
       _products.add(new ProductLineitem(product: product));
     }
-    print("testtttt ${_products.length}");
     notifyListeners();
   }
 

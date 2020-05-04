@@ -22,7 +22,6 @@ class AuthService {
           email: email, password: password);
       return result;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -31,10 +30,8 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      print(result);
       return result;
     } catch (e) {
-      print(e);
       return null;
     }
   }
