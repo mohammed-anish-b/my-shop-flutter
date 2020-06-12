@@ -17,6 +17,10 @@ class CreateProductBloc {
     _product.imageUrl = image;
   }
 
+  set userId(String id) {
+    _product.userId = id;
+  }
+
   Product get product => _product;
 
 }

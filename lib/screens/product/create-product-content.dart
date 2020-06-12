@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +9,11 @@ class CreateProductContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-     final _imagePickerBloc = Provider.of<ImagePickerBloc>(context);
-     final _createProductBloc = Provider.of<CreateProductBloc>(context);
-
+    final _imagePickerBloc = Provider.of<ImagePickerBloc>(context);
+    final _createProductBloc = Provider.of<CreateProductBloc>(context);
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    _createProductBloc.userId = user.uid;
+    
     return Container(
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(

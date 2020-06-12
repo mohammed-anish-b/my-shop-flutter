@@ -104,7 +104,10 @@ class Login extends StatelessWidget {
                               if (_login.currentState.validate()) {
                                 await _authService.signInWithEmailAndPassword(
                                     _loginSignupBloc.email,
-                                    _loginSignupBloc.password).then((value) => _loadingBloc.toggleLoading());
+                                    _loginSignupBloc.password).then((value) {
+                                      _loadingBloc.toggleLoading();
+                                      //_authService.getUser();
+                                      });
                               }
                             },
                             icon: Icon(

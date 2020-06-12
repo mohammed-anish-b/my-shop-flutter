@@ -98,8 +98,8 @@ class SignUp extends StatelessWidget {
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter repeat password';
-                      } else if (value.length < 6) {
-                        return 'Minimum password length is 6';
+                      } else if (value != _loginSignupBloc.password) {
+                        return 'Password mismatch';
                       }
                       return null;
                     },
