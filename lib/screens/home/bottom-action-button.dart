@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/api/services/checkout-service.dart';
+import 'package:my_shop/blocs/cart-bloc.dart';
 import 'package:my_shop/blocs/tab-switch-bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,8 @@ class BottomActionButon extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final _tabSwitchBloc = Provider.of<TabSwitchBloc>(context);
+    final _cartBloc = Provider.of<CartBloc>(context);
+    final _checkoutService = Provider.of<CheckoutService>(context);
     
     return _tabSwitchBloc.index == 0 ? FlatButton.icon(
             onPressed: () {
@@ -24,10 +28,12 @@ class BottomActionButon extends StatelessWidget {
             color: Colors.blue,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
             icon: Icon(Icons.shopping_basket,color: Colors.white,),
-            label: Text("Checkout",style: TextStyle(
+            label: Text('INR ${_cartBloc.total}',style: TextStyle(
               color: Colors.white
             )),
-            onPressed: () {}
+            onPressed: () {
+              _checkoutService.checkout(_cartBloc.checkoutData, (){}, (){});
+            }
           );
   }
 }

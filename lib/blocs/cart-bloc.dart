@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_shop/api/models/Product.dart';
 import 'package:my_shop/api/models/produclineitem.dart';
+import 'package:my_shop/api/models/sale.dart';
 
 class CartBloc extends ChangeNotifier {
   List<ProductLineitem> _products;
@@ -49,6 +50,19 @@ class CartBloc extends ChangeNotifier {
     });
     _products.remove(tempItem);
     notifyListeners();
+  }
+
+  get total {
+    int total = 0;
+    this._products.forEach((element) => total = total + (element.count*int.parse(element.product.price)));
+    return total;
+  }
+
+  get checkoutData {
+    Sale sale = Sale();
+    sale.productLineitems = this._products;
+    sale.total = this.total;    
+    return sale;
   }
 
   clear() {

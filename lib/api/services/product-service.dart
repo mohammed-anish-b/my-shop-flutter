@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_shop/api/models/Product.dart';
-import 'package:my_shop/services/auth-service.dart';
 
 class ProductService {
   static ProductService _instance;
@@ -17,14 +16,7 @@ class ProductService {
     }
     return _instance;
   }
-
-  // getUser() {
-  //   AuthService.getInstance.user.forEach((element) {
-  //     user = element;
-  //     print('2 $user');
-  //   });
-  // }
-
+  
   List<Product> _productFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Product.fromJson(doc, doc.documentID);

@@ -31,15 +31,7 @@ class Store extends StatelessWidget {
                   alignment: AlignmentDirectional.bottomCenter,
                   child: Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                            ),
-                            onPressed: null),
-                      ),
+                      SizedBox(width: 20),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 15, 35, 12),
                         child: SizedBox(

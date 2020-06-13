@@ -15,8 +15,6 @@ class CustomTab extends StatelessWidget {
     final _productService = Provider.of<ProductService>(context);
     FirebaseUser user = Provider.of<FirebaseUser>(context);
 
-    // _productService.getUser();
-
     return  StreamProvider<List<Product>>.value(value: _productService.getproducts(user) ,child: _tabSwitchBloc.tab);
     
   }
