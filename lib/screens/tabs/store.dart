@@ -24,7 +24,7 @@ class Store extends StatelessWidget {
                         BorderRadius.only(bottomRight: Radius.circular(70))),
                 backgroundColor: Colors.blueGrey,
                 expandedHeight: 150.0,
-                title: Text("Product"),
+                title: Text("Product" , style: TextStyle(color: Colors.white, fontSize: 30),),
                 //leading: Icon(Icons.fastfood),
                 forceElevated: true,
                 flexibleSpace: Align(

@@ -17,7 +17,7 @@ class ProductService {
     return _instance;
   }
   
-  List<Product> _productFromSnapshot(QuerySnapshot snapshot) {
+  List<Product> _productsFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Product.fromJson(doc, doc.documentID);
     }).toList();
@@ -28,7 +28,7 @@ class ProductService {
     return productCollection
         .where('userId',isEqualTo: user.uid)
         .snapshots()
-        .map(_productFromSnapshot);
+        .map(_productsFromSnapshot);
   }
 
   Future<DocumentReference> createProduct(Product product) {
@@ -43,5 +43,16 @@ class ProductService {
 
   void deleteProduct(String uid) {
     productCollection.document(uid).delete();
+  }
+
+  Stream<Product> getProductFromProductId(id) {
+    this.user = user;
+    return productCollection.document(id)
+        .snapshots()
+        .map(_productFromSnapshot);
+  }
+
+  Product _productFromSnapshot(DocumentSnapshot doc) {
+      return Product.fromJson(doc, doc.documentID);
   }
 }

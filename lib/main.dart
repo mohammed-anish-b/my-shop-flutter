@@ -5,7 +5,7 @@ import 'package:my_shop/blocs/login-signup-bloc.dart';
 import 'package:my_shop/blocs/login-signup-toggle-bloc.dart';
 import 'package:my_shop/screens/home/home.dart';
 import 'package:my_shop/screens/product/create-product.dart';
-import 'package:my_shop/screens/sale-history/sale-history.dart';
+import 'package:my_shop/screens/sale-history/sale-history-module.dart';
 import 'package:my_shop/services/auth-service.dart';
 import 'package:my_shop/services/auth-wrapper.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         home: Wrapper(),
         routes: {
           'create-product': (context) => CreateProduct(),
-          'sale-history': (context) => SaleHistory(),
+          'sale-history': (context) => SaleHistoryModule(),
           'home': (context) => Home()
         },
       ),

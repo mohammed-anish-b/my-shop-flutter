@@ -1,41 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/api/models/sale.dart';
+import 'package:my_shop/api/services/sale-history-service.dart';
+import 'package:my_shop/blocs/sale-history-bloc.dart';
+import 'package:my_shop/screens/sale-history/sale-history-content.dart';
 import 'package:my_shop/shared/sidemenu.dart';
+import 'package:provider/provider.dart';
 
 class SaleHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: SideMenu(),
-      body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(70))),
-          backgroundColor: Colors.blueGrey,
-          expandedHeight: 150.0,
-          flexibleSpace: Align(
-            alignment: AlignmentDirectional.bottomCenter,
-            child: Row(
-              children: <Widget>[
-                SizedBox(width: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sale History',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                )
-              ],
-            ),
-          ),
-          floating: true,
-          actions: <Widget>[
-           
-          ],
-        ),
-      ],
-    )
-    );
+    final _saleHistoryService = Provider.of<SaleHistoryService>(context);
+    final _saleHistoryBloc = Provider.of<SaleHistoryBloc>(context);
+    return StreamProvider<List<Sale>>.value(
+        value: _saleHistoryService.getSaleHistory(_saleHistoryBloc.date),
+        child: Scaffold(drawer: SideMenu(), body: SaleHistoryContent()));
   }
 }

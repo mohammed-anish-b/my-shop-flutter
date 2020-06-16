@@ -12,8 +12,10 @@ class SideMenu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(_user.displayName),
-            accountEmail: Text(_user.email),
+            accountName: _user.displayName == null
+                ? Text(_user.uid)
+                : Text(_user.displayName.toString()),
+            accountEmail: Text(_user.email.toString()),
             currentAccountPicture: FlutterLogo(),
             decoration: BoxDecoration(color: Colors.black87),
             onDetailsPressed: () {},

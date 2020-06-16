@@ -8,4 +8,16 @@ class ProductLineitem {
 
     ProductLineitem({this.product});
 
+    static ProductLineitem fromJson(json,String id) {
+    ProductLineitem p = ProductLineitem();
+    p.id = id;
+    p.count = json['count'];
+    return p;
+  }
+
+  @override
+  String toString() {
+    return '$id + $count';
+  }
+
 }
