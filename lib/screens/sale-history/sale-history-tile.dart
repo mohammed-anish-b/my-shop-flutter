@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_shop/api/models/sale.dart';
 
 class SaleHistoryTile extends StatelessWidget {
-  Sale sale;
+  final Sale sale;
 
-  SaleHistoryTile(Sale sale) {
-    this.sale = sale;
-  }
+  SaleHistoryTile({this.sale});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:my_shop/api/models/Product.dart';
-import 'package:provider/provider.dart';
 
 class CreateProductBloc {
 
