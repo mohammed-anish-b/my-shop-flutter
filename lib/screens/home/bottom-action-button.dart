@@ -35,17 +35,33 @@ class BottomActionButon extends StatelessWidget {
               _checkoutService.checkout(_cartBloc.checkoutData, () {
                 _cartBloc.clear();
                 _tabSwitchBloc.switchTab(0);
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Row(children: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                      onPressed: null),
+                  Text(
+                    'Checkout Success',
+                    style: TextStyle(color: Colors.green),
+                  )
+                ])));
               }, (val) {
-                AlertDialog(
-                  content: Text('Checkout Failed $val',
-                      style: TextStyle(color: Colors.red)),
-                  actions: [
-                    FlatButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text("OK"),
-                    )
-                  ],
-                );
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Row(children: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.warning,
+                        color: Colors.red,
+                      ),
+                      onPressed: null),
+                  Text(
+                    'Checkout failed',
+                    style: TextStyle(color: Colors.red),
+                  )
+                ])));
               });
             });
   }
