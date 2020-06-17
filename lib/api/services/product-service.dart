@@ -16,7 +16,15 @@ class ProductService {
     }
     return _instance;
   }
-  
+
+  Stream<List<Product>> getProduct(String query, FirebaseUser user) {
+    if(query == null || query == '') {
+      return getproducts(user);
+    } else {
+      return searchProducts(query, user);
+    }
+  }
+
   List<Product> _productsFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Product.fromJson(doc, doc.documentID);
@@ -26,7 +34,20 @@ class ProductService {
   Stream<List<Product>> getproducts(FirebaseUser user) {
     this.user = user;
     return productCollection
-        .where('userId',isEqualTo: user.uid)
+        .where('userId', isEqualTo: user.uid)
+        .snapshots()
+        .map(_productsFromSnapshot);
+  }
+
+  Stream<List<Product>> searchProducts(String query, FirebaseUser user) {
+    this.user = user;
+    String lessThanQueryString = query.substring(0, query.length-1) +
+        String.fromCharCode(query.codeUnitAt(query.length - 1) + 1);
+        print(lessThanQueryString);
+    return productCollection
+        .where('userId', isEqualTo: user.uid)
+        .where('name', isGreaterThan: query)
+        .where('name', isLessThan: lessThanQueryString)
         .snapshots()
         .map(_productsFromSnapshot);
   }
@@ -47,12 +68,10 @@ class ProductService {
 
   Stream<Product> getProductFromProductId(id) {
     this.user = user;
-    return productCollection.document(id)
-        .snapshots()
-        .map(_productFromSnapshot);
+    return productCollection.document(id).snapshots().map(_productFromSnapshot);
   }
 
   Product _productFromSnapshot(DocumentSnapshot doc) {
-      return Product.fromJson(doc, doc.documentID);
+    return Product.fromJson(doc, doc.documentID);
   }
 }

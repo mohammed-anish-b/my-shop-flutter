@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/api/models/Product.dart';
+import 'package:my_shop/blocs/product-search-bloc.dart';
 import 'package:my_shop/screens/product/product_tile.dart';
 import 'package:my_shop/services/auth-service.dart';
 import 'package:my_shop/utils/loading.dart';
@@ -13,6 +14,7 @@ class Store extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Product> products = Provider.of<List<Product>>(context);
     final _productViewBloc = Provider.of<ProductViewBloc>(context);
+    final _productSearchBloc = Provider.of<ProductSearchBloc>(context);
 
     return products == null
         ? Center(child: Loading(color: Colors.blue))
@@ -38,6 +40,7 @@ class Store extends StatelessWidget {
                           height: 50,
                           width: 300,
                           child: TextFormField(
+                            onChanged: (val) => _productSearchBloc.updateQuery(val),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
