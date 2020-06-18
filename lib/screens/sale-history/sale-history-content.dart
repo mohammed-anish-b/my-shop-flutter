@@ -12,7 +12,6 @@ class SaleHistoryContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Sale> sales = Provider.of<List<Sale>>(context);
-    log(Provider.of<List<Sale>>(context).toString());
     final _saleHistoryBloc = Provider.of<SaleHistoryBloc>(context);
 
     return CustomScrollView(

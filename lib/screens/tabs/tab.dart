@@ -17,7 +17,7 @@ class CustomTab extends StatelessWidget {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     String query  = Provider.of<ProductSearchBloc>(context).query;
 
-    return  StreamProvider<List<Product>>.value(value: _productService.getProduct(query,user) ,child: _tabSwitchBloc.tab);
+    return  StreamProvider<List<Product>>.value(value: _productService.getProducts(query,user) ,child: _tabSwitchBloc.tab);
     
   }
 }
