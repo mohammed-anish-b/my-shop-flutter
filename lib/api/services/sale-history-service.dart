@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_shop/api/models/produclineitem.dart';
 import 'package:my_shop/api/models/sale.dart';
