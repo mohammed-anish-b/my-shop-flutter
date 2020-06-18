@@ -49,7 +49,7 @@ class _SaleHistoryTileState extends State<SaleHistoryTile> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
-                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return Padding(
